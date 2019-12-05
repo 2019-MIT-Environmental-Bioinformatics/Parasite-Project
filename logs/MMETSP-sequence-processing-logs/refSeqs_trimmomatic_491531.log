@@ -1,0 +1,31 @@
+/cm/local/apps/slurm/var/spool/job491531/slurm_script: line 16: activate: No such file or directory
+TrimmomaticPE: Started with arguments:
+ -threads 36 raw_refseqs/SRR1294385_1.fastq.gz raw_refseqs/SRR1294385_2.fastq.gz trimmed_refseqs/SRR1294385_1.trimmed.fastq.gz untrimmed_refseqs/SRR1294385_1.untrimmed.fastq.gz trimmed_refseqs/SRR1294385_2.trimmed.fastq.gz untrimmed_refseqs/SRR1294385_2.untrimmed.fastq.gz SLIDINGWINDOW:4:20 MINLEN:37
+Quality encoding detected as phred33
+Input Read Pairs: 4022666 Both Surviving: 3611431 (89.78%) Forward Only Surviving: 138368 (3.44%) Reverse Only Surviving: 238338 (5.92%) Dropped: 34529 (0.86%)
+TrimmomaticPE: Completed successfully
+TrimmomaticPE: Started with arguments:
+ -threads 36 raw_refseqs/SRR1294386_1.fastq.gz raw_refseqs/SRR1294386_2.fastq.gz trimmed_refseqs/SRR1294386_1.trimmed.fastq.gz untrimmed_refseqs/SRR1294386_1.untrimmed.fastq.gz trimmed_refseqs/SRR1294386_2.trimmed.fastq.gz untrimmed_refseqs/SRR1294386_2.untrimmed.fastq.gz SLIDINGWINDOW:4:20 MINLEN:37
+Quality encoding detected as phred33
+Input Read Pairs: 4689638 Both Surviving: 4218848 (89.96%) Forward Only Surviving: 269677 (5.75%) Reverse Only Surviving: 108522 (2.31%) Dropped: 92591 (1.97%)
+TrimmomaticPE: Completed successfully
+TrimmomaticPE: Started with arguments:
+ -threads 36 raw_refseqs/SRR1294387_1.fastq.gz raw_refseqs/SRR1294387_2.fastq.gz trimmed_refseqs/SRR1294387_1.trimmed.fastq.gz untrimmed_refseqs/SRR1294387_1.untrimmed.fastq.gz trimmed_refseqs/SRR1294387_2.trimmed.fastq.gz untrimmed_refseqs/SRR1294387_2.untrimmed.fastq.gz SLIDINGWINDOW:4:20 MINLEN:37
+Quality encoding detected as phred33
+Input Read Pairs: 9392254 Both Surviving: 8610313 (91.67%) Forward Only Surviving: 480436 (5.12%) Reverse Only Surviving: 154975 (1.65%) Dropped: 146530 (1.56%)
+TrimmomaticPE: Completed successfully
+TrimmomaticPE: Started with arguments:
+ -threads 36 raw_refseqs/SRR1294388_1.fastq.gz raw_refseqs/SRR1294388_2.fastq.gz trimmed_refseqs/SRR1294388_1.trimmed.fastq.gz untrimmed_refseqs/SRR1294388_1.untrimmed.fastq.gz trimmed_refseqs/SRR1294388_2.trimmed.fastq.gz untrimmed_refseqs/SRR1294388_2.untrimmed.fastq.gz SLIDINGWINDOW:4:20 MINLEN:37
+Quality encoding detected as phred33
+Input Read Pairs: 5263188 Both Surviving: 4679618 (88.91%) Forward Only Surviving: 206835 (3.93%) Reverse Only Surviving: 323878 (6.15%) Dropped: 52857 (1.00%)
+TrimmomaticPE: Completed successfully
+TrimmomaticPE: Started with arguments:
+ -threads 36 raw_refseqs/SRR1294389_1.fastq.gz raw_refseqs/SRR1294389_2.fastq.gz trimmed_refseqs/SRR1294389_1.trimmed.fastq.gz untrimmed_refseqs/SRR1294389_1.untrimmed.fastq.gz trimmed_refseqs/SRR1294389_2.trimmed.fastq.gz untrimmed_refseqs/SRR1294389_2.untrimmed.fastq.gz SLIDINGWINDOW:4:20 MINLEN:37
+Quality encoding detected as phred33
+Input Read Pairs: 262340 Both Surviving: 94712 (36.10%) Forward Only Surviving: 97396 (37.13%) Reverse Only Surviving: 5608 (2.14%) Dropped: 64624 (24.63%)
+TrimmomaticPE: Completed successfully
+TrimmomaticPE: Started with arguments:
+ -threads 36 raw_refseqs/SRR1300214_1.fastq.gz raw_refseqs/SRR1300214_2.fastq.gz trimmed_refseqs/SRR1300214_1.trimmed.fastq.gz untrimmed_refseqs/SRR1300214_1.untrimmed.fastq.gz trimmed_refseqs/SRR1300214_2.trimmed.fastq.gz untrimmed_refseqs/SRR1300214_2.untrimmed.fastq.gz SLIDINGWINDOW:4:20 MINLEN:37
+Quality encoding detected as phred33
+Input Read Pairs: 27042993 Both Surviving: 24186056 (89.44%) Forward Only Surviving: 1795816 (6.64%) Reverse Only Surviving: 519974 (1.92%) Dropped: 541147 (2.00%)
+TrimmomaticPE: Completed successfully

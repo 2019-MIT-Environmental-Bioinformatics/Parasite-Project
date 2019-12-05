@@ -1,0 +1,463 @@
+/cm/local/apps/slurm/var/spool/job495421/slurm_script: line 16: activate: No such file or directory
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/get_top_longest_fasta_entries.pl alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds 5000 5000 > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.top_longest_5000
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/exclude_similar_proteins.pl alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.top_longest_5000 > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.top_longest_5000.nr
+-skipping training candidate: TRINITY_DN5178_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN11040_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN11040_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN1493_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN1493_c0_g1_i10.p1, not unique enough
+-skipping training candidate: TRINITY_DN1493_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN13267_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN11453_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN5852_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN6359_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN89732_c1_g2_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN9780_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN4715_c0_g1_i8.p1, not unique enough
+-skipping training candidate: TRINITY_DN4715_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN4715_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN482_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN15195_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN2506_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN2506_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9780_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN9025_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN6413_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN6413_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN6413_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN6413_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN11584_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN24024_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN93467_c0_g2_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN1639_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN3420_c0_g1_i8.p1, not unique enough
+-skipping training candidate: TRINITY_DN3420_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN3420_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN3420_c0_g1_i11.p1, not unique enough
+-skipping training candidate: TRINITY_DN15345_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN18747_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6466_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6466_c0_g1_i7.p1, not unique enough
+-skipping training candidate: TRINITY_DN6466_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN6466_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN6466_c0_g1_i8.p1, not unique enough
+-skipping training candidate: TRINITY_DN6466_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN3413_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN11705_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g1_i7.p1, not unique enough
+-skipping training candidate: TRINITY_DN8291_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN14282_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN11462_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g2_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN11462_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN12074_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN8035_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g1_i13.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g1_i11.p1, not unique enough
+-skipping training candidate: TRINITY_DN9798_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g1_i12.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g1_i9.p1, not unique enough
+-skipping training candidate: TRINITY_DN28919_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g2_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g2_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g2_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g2_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN14869_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN4286_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN7137_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9049_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN7263_c0_g1_i1.p2, not unique enough
+-skipping training candidate: TRINITY_DN4251_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN16138_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN7263_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN7263_c0_g1_i2.p2, not unique enough
+-skipping training candidate: TRINITY_DN4730_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3687_c0_g1_i10.p1, not unique enough
+-skipping training candidate: TRINITY_DN3687_c0_g1_i7.p1, not unique enough
+-skipping training candidate: TRINITY_DN3687_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN3687_c0_g1_i8.p1, not unique enough
+-skipping training candidate: TRINITY_DN3687_c0_g1_i9.p1, not unique enough
+-skipping training candidate: TRINITY_DN3687_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN606_c0_g1_i7.p1, not unique enough
+-skipping training candidate: TRINITY_DN606_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN138383_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN15695_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6011_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN11262_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN11722_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN1594_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN1594_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN6011_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN6011_c0_g2_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN40211_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN3074_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN2506_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN9551_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6249_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN13182_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6302_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4220_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN7021_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN6250_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN18814_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN5540_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN5557_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN15745_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN98419_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN15420_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN659_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN11735_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN112135_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN10753_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN16930_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN19092_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN5825_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN5825_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN12420_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN11969_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN8483_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN1904_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN7833_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6331_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9349_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN14760_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN16930_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9025_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN9607_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9025_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN3610_c0_g1_i8.p1, not unique enough
+-skipping training candidate: TRINITY_DN3883_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN7348_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN4182_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4182_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN75_c0_g2_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN635_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN6302_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g1_i10.p1, not unique enough
+-skipping training candidate: TRINITY_DN7434_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN87732_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN62904_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6607_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN9052_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN67347_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN40143_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN8392_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN14155_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN15695_c0_g1_i1.p2, not unique enough
+-skipping training candidate: TRINITY_DN13992_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN4328_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN4328_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4328_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN4328_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN3058_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN7848_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN65745_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN41226_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN10822_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN6525_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN117987_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4586_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4800_c0_g2_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN4800_c0_g2_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN2707_c0_g1_i8.p1, not unique enough
+-skipping training candidate: TRINITY_DN2707_c0_g1_i13.p1, not unique enough
+-skipping training candidate: TRINITY_DN2707_c0_g1_i10.p1, not unique enough
+-skipping training candidate: TRINITY_DN2707_c0_g1_i11.p1, not unique enough
+-skipping training candidate: TRINITY_DN2707_c0_g1_i14.p1, not unique enough
+-skipping training candidate: TRINITY_DN11063_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN102_c0_g2_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN66122_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN66122_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN8374_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN3711_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3383_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4661_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN16767_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN89732_c1_g2_i1.p2, not unique enough
+-skipping training candidate: TRINITY_DN3692_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN4027_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN6918_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN12870_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN12870_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN23460_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN7727_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN13494_c0_g1_i10.p1, not unique enough
+-skipping training candidate: TRINITY_DN10829_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN5831_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN7465_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN46286_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN10120_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN5910_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4668_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN7021_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN9460_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN139527_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3413_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN10636_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN852_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN5412_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN5026_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN15566_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN12483_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6646_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN21046_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN21046_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4482_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN4187_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN12017_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN12017_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN112373_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN75_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN3848_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN9780_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN1424_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN606_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3058_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN3058_c0_g1_i8.p1, not unique enough
+-skipping training candidate: TRINITY_DN3058_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3023_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN7310_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN16373_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN13021_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4800_c0_g2_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN750_c1_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN10362_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN11252_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN11252_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN13566_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9858_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3603_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN22633_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9620_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN14184_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9555_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN1493_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN38602_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN17963_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN17930_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN5855_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9780_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN11765_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9031_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN13494_c0_g1_i7.p1, not unique enough
+-skipping training candidate: TRINITY_DN376_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN5291_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN4083_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4083_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN4083_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN3610_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN6646_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN9980_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN1594_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN48604_c0_g1_i1.p2, not unique enough
+-skipping training candidate: TRINITY_DN11400_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN13663_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN92313_c1_g2_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN17085_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN8_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN18516_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN8349_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3741_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3741_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN14472_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN8341_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN3741_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN3741_c0_g1_i9.p1, not unique enough
+-skipping training candidate: TRINITY_DN3741_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN3741_c0_g1_i8.p1, not unique enough
+-skipping training candidate: TRINITY_DN13523_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9764_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6616_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN2707_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN5540_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN8538_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3610_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN113467_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3610_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9019_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN1511_c0_g1_i10.p1, not unique enough
+-skipping training candidate: TRINITY_DN1511_c0_g1_i9.p1, not unique enough
+-skipping training candidate: TRINITY_DN1511_c0_g1_i8.p1, not unique enough
+-skipping training candidate: TRINITY_DN1442_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN4507_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4181_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4181_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN8628_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN4053_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4354_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN1120_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN14968_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN12488_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN18464_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN1511_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN1511_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN7535_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN90114_c0_g1_i1.p2, not unique enough
+-skipping training candidate: TRINITY_DN92630_c0_g2_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN8146_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN3526_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN7535_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN3610_c0_g1_i7.p1, not unique enough
+-skipping training candidate: TRINITY_DN2300_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN2300_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN4657_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN5929_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN12523_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN22767_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN11744_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN7442_c1_g1_i8.p1, not unique enough
+-skipping training candidate: TRINITY_DN7442_c1_g1_i8.p2, not unique enough
+-skipping training candidate: TRINITY_DN10119_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN22443_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN7442_c1_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN7442_c1_g1_i3.p2, not unique enough
+-skipping training candidate: TRINITY_DN7442_c1_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN7442_c1_g1_i1.p2, not unique enough
+-skipping training candidate: TRINITY_DN3852_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN445_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3370_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN2792_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN288_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN1511_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN22642_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN3370_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN2666_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9583_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN9329_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN11749_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN8808_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN1228_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN17727_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN14974_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN1594_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN64107_c0_g2_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN15400_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4435_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN3055_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN3055_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN135442_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN1944_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN24572_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN3392_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN3392_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3392_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN3392_c0_g1_i6.p1, not unique enough
+-skipping training candidate: TRINITY_DN3392_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN13250_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN2830_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN1037_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN1037_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3175_c1_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN6006_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN5148_c0_g1_i5.p1, not unique enough
+-skipping training candidate: TRINITY_DN8975_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN5881_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3370_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN1656_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN72783_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN19392_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN3992_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN3940_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN1973_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN1973_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN135442_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN5148_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN3854_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN12563_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN18061_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN994_c0_g1_i3.p1, not unique enough
+-skipping training candidate: TRINITY_DN994_c0_g1_i4.p1, not unique enough
+-skipping training candidate: TRINITY_DN3327_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN19534_c0_g1_i1.p1, not unique enough
+-skipping training candidate: TRINITY_DN11362_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN4445_c0_g1_i2.p1, not unique enough
+-skipping training candidate: TRINITY_DN1493_c0_g1_i11.p1, not unique enough
+-skipping training candidate: TRINITY_DN111673_c0_g1_i1.p1, not unique enough
+
+	-redundancy-minimized set includes 4624 / 5000 = 92.48%
+
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/get_top_longest_fasta_entries.pl alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.top_longest_5000.nr 500 > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.top_500_longest
+PCT_GC: 62
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/seq_n_baseprobs_to_loglikelihood_vals.pl alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.top_500_longest alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/base_freqs.dat > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/hexamer.scores
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/score_CDS_likelihood_all_6_frames.pl alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/hexamer.scores > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.scores
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/select_best_ORFs_per_transcript.pl --gff3_file alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.gff3 --cds_scores alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.scores  --min_length_auto_accept 1086  > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.best_candidates.gff3 
+Selecting best orfs
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/train_start_PWM.pl --transcripts alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa --selected_orfs alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.top_500_longest --out_prefix alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement
+Training start codon pattern recognition* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/build_atgPWM_+-.pl  --transcripts alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa  --selected_orfs alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.top_500_longest  --out_prefix alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement --pwm_left 20 --pwm_right 10 
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/feature_scoring.+-.pl  --features_plus alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.+.features  --features_minus alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.-.features  --atg_position 20  > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.feature.scores
+-round: 1
+-round: 2
+-round: 3
+-round: 4
+-round: 5
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/feature_scores_to_ROC.pl alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.feature.scores > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.feature.scores.roc
+-parsing scores
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/plot_ROC.Rscript alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.feature.scores.roc || :
+/usr/bin/env: Rscript: No such file or directory
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/compute_AUC.pl alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.feature.scores.roc
+Can't exec "Rscript": No such file or directory at /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/compute_AUC.pl line 82.
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/make_seqLogo.Rscript alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.+.pwm || :
+/usr/bin/env: Rscript: No such file or directory
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/make_seqLogo.Rscript alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.-.pwm || :
+/usr/bin/env: Rscript: No such file or directory
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/deplete_feature_noise.pl  --features_plus alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.+.features  --pwm_minus alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.-.pwm  --out_prefix alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.enhanced
+num features: 155	num_incorporate: 46
+-feature swap of score: -0.285945921390871 instead of -1.77572324086076
+-feature swap of score: -0.352202576760911 instead of -1.64433194693947
+-feature swap of score: 2.12338726506783 instead of -0.991596894448996
+-feature swap of score: 1.9795715563994 instead of -1.17010520623829
+-feature swap of score: 1.88317491789816 instead of -1.30014759394513
+-feature swap of score: 0.949704241537931 instead of -1.20928365707416
+-feature swap of score: -0.137028881344131 instead of -0.787182507878542
+-feature swap of score: 1.14975172148762 instead of -0.64431343274037
+-feature swap of score: 2.26858323600707 instead of -0.335490365787055
+-feature swap of score: -0.222270945010007 instead of -0.472705312557202
+-feature swap of score: 4.13807569428556 instead of -0.58219348974686
+-feature swap of score: 2.00082382568471 instead of -0.172277095383555
+-feature swap of score: 4.51617357298812 instead of 0.294137644538939
+-feature swap of score: 0.753669492795388 instead of 0.516592468585078
+-feature swap of score: 3.45145997407442 instead of 0.668480708253467
+-feature swap of score: 0.743859783723438 instead of 0.479353572152396
+-feature swap of score: 5.49232210147603 instead of 0.45109935289002
+-feature swap of score: 0.619386594345519 instead of -0.109520895948346
+-feature swap of score: 2.85423574370037 instead of 1.39784775827374
+-feature swap of score: 2.08125025593791 instead of 1.29072162612531
+-feature swap of score: 3.41851381686036 instead of 1.21885157857288
+-feature swap of score: 1.67171962774937 instead of 1.16096910326223
+-feature swap of score: 4.01482859980043 instead of 0.89211082628467
+-feature swap of score: 2.74072404191784 instead of 1.52109200646481
+-feature swap of score: 2.56140331860617 instead of 1.67582271841449
+-feature swap of score: 5.59036676170913 instead of 1.49085566919959
+-feature swap of score: 2.06342103964515 instead of 1.70032430913332
+-num feature swaps: 27
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/feature_scoring.+-.pl  --features_plus alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.enhanced.+.features  --features_minus alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.-.features  --atg_position 20  > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.enhanced.feature.scores
+-round: 1
+-round: 2
+-round: 3
+-round: 4
+-round: 5
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/feature_scores_to_ROC.pl alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.enhanced.feature.scores > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.enhanced.feature.scores.roc
+-parsing scores
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/plot_ROC.Rscript alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.enhanced.feature.scores.roc || :
+/usr/bin/env: Rscript: No such file or directory
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/compute_AUC.pl alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.enhanced.feature.scores.roc
+Can't exec "Rscript": No such file or directory at /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/compute_AUC.pl line 82.
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/PWM/make_seqLogo.Rscript alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/start_refinement.enhanced.+.pwm || :
+/usr/bin/env: Rscript: No such file or directory
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/start_codon_refinement.pl --transcripts alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa --gff3_file alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.best_candidates.gff3 --workdir alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.best_candidates.gff3.revised_starts.gff3
+Refining start codon selections.
+-number of revised start positions: 8563
+* Running CMD: cp alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder_dir/longest_orfs.cds.best_candidates.gff3.revised_starts.gff3 alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.gff3
+copying output to final output file: alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.gff3* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/gff3_file_to_bed.pl alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.gff3 > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.bed
+Making bed file: alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.bed
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/gff3_file_to_proteins.pl --gff3 alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.gff3 --fasta alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa  --genetic_code Universal > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.pep
+Making pep file: alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.pep
+* Running CMD: /vortexfs1/home/dgellermcgrath/.conda/envs/downloading/opt/transdecoder/util/gff3_file_to_proteins.pl --gff3 alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.gff3 --fasta alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa --seqType CDS  --genetic_code Universal > alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.cds
+Making cds file: alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.cds
+transdecoder is finished.  See output files alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.*
+
+

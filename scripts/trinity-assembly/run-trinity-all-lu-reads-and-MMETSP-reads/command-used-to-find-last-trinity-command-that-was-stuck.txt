@@ -1,0 +1,6 @@
+In an interactive node, I ran the following command to find the last command which Trinity had stalled on. I knew that it had stalled on one final command based on the log file saying it was ~99.99% done with all of its commands.
+This is the command:
+
+comm -13 <(sort recursive_trinity.cmds.completed) <(sort recursive_trinity.cmds)
+ # command that had not yet been run from the commands list compared to the completed commands list 
+ # found the missing command which was then used in the trinity-last-command-to-finish-assembly.sh, which is also in this repo.

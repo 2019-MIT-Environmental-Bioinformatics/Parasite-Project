@@ -1,0 +1,5 @@
+TrimmomaticPE: Started with arguments:
+ -threads 36 raw_refseqs/SRR1294390_1.fastq.gz raw_refseqs/SRR1294390_2.fastq.gz trimmed_refseqs/SRR1294390_1.trimmed.fastq.gz untrimmed_refseqs/SRR1294390_1.untrimmed.fastq.gz trimmed_refseqs/SRR1294390_2.trimmed.fastq.gz untrimmed_refseqs/SRR1294390_2.untrimmed.fastq.gz SLIDINGWINDOW:4:24 MINLEN:70
+Quality encoding detected as phred33
+Input Read Pairs: 16172483 Both Surviving: 12211446 (75.51%) Forward Only Surviving: 1482329 (9.17%) Reverse Only Surviving: 1025854 (6.34%) Dropped: 1452854 (8.98%)
+TrimmomaticPE: Completed successfully

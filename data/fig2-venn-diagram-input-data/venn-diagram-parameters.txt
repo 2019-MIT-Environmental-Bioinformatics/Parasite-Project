@@ -1,0 +1,84 @@
+Figure 2: Venn diagram values:
+
+6 hour (6h) venn diagram:
+
+outer venn values:
+
+Host lysed cell (+A) vs cue control (–WP):
+upregulated: 40
+downregulated: 89
+
+Parasite infected (+P) vs Parasite control (–P):
+upregulated: 10
+downregulated: 2
+
+Parasite cue (+WP) vs cue control (–WP):
+upregulated: 235
+downregulated: 14
+
+
+
+Two-way venn intersections:
+
+Parasite infected (+P)/Parasite control (–P) vs Parasite cue (+WP)/cue control (–WP):
+upregulated: 1
+downregulated: 0
+
+Parasite infected (+P)/Parasite control (–P) vs Host lysed cell (+A)/cue control (–WP):
+upregulated: 0
+downregulated: 0
+
+Host lysed cell (+A)/cue control (–WP) vs Parasite cue (+WP)/cue control (–WP):
+upregulated: 4
+downregulated: 0
+
+
+
+Three-way inner venn intersection:
+upregulated: 0
+downregulated: 0
+
+
+
+
+
+
+
+
+96 hour (96h) venn diagram:
+
+outer venn values:
+
+Host lysed cell (+A) vs cue control (–WP):
+upregulated: 8
+downregulated: 0
+
+Parasite infected (+P) vs Parasite control (–P):
+upregulated: 5978
+downregulated: 4040
+
+Parasite cue (+WP) vs cue control (–WP):
+upregulated: 11514
+downregulated: 438
+
+
+
+Two-way venn intersections:
+
+Parasite infected (+P)/Parasite control (–P) vs Parasite cue (+WP)/cue control (–WP):
+upregulated: 1737
+downregulated: 0
+
+Parasite infected (+P)/Parasite control (–P) vs Host lysed cell (+A)/cue control (–WP):
+upregulated: 6
+downregulated: 0
+
+Host lysed cell (+A)/cue control (–WP) vs Parasite cue (+WP)/cue control (–WP):
+upregulated: 6
+downregulated: 0
+
+
+
+Three-way inner venn intersection:
+upregulated: 5
+downregulated: 0

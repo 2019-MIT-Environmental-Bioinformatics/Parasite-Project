@@ -1,0 +1,874 @@
+---
+title: "R Notebook - Lu et al re-analysis - Parasite Project"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
+---
+
+```{r}
+#load packages which may be useful during this analysis
+packs <- c('tidyverse', 'caret', 'ranger', 'RColorBrewer', 'devtools', 'reticulate', 'reshape2',
+           'pheatmap', 'gplots', 'viridis')
+lapply(packs, library, character.only = TRUE)
+
+#Note: the following data is required to run this notebook: Env_bio_Lu_DESeq_treatments.txt, read_counts_second_assembly.tsv, trinotate_annotation_report.xls
+  #These files are available on the cluster at: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/data/DESeq2-input-data
+
+#Please execute chunks by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+```
+
+```{r}
+# Preparation for DESeq2 Analysis  --------------------------------
+
+#downloaded table with Lu et al metadata from NCBI, reformatting it to use as col data with DESeq2
+lu_coldata <- read.csv('~/Documents/envBinf_finalProject/Env_bio_Lu_DESeq_treatments.txt', sep = '\t',
+                       row.names = 1)
+rownames(lu_coldata) <- sub('-counts.txt', '', rownames(lu_coldata))
+
+#getting rid of t0 control samples. they were not used in the analysis that we are recreating
+lu_coldata <- lu_coldata[-c(7, 8, 9), ]
+
+#renaming metadata about the treatments and times to be easier to work with and read
+lu_coldata$Treatment <- as.character(lu_coldata$Treatment)
+lu_coldata$Treatment[7:18] <- c('CP', 'CP', 'CP', 'CP', 'CP', 'CP',
+                                'CWP', 'CWP', 'CWP', 'CWP', 'CWP', 'CWP')
+lu_coldata$Treatment <- as.factor(lu_coldata$Treatment)
+lu_coldata$Experiment <- sub('_replicate[0-9]', '', lu_coldata$Experiment)
+lu_coldata$Experiment <- as.factor(lu_coldata$Experiment)
+levels(lu_coldata$Experiment)
+
+#import the read table from the assembly which had a reference transcriptome comrpised of both MMETSP and Lu et al RNA-seq reads
+finalDE_counts <- as.matrix(read.csv('~/Documents/envBinf_finalProject/read_counts_second_assembly.tsv',
+                                     sep = '\t', row.names = 'Contig'))
+#rename the columns to match the rownames in the deseq2 coldata
+colnames(finalDE_counts) <- sub('.counts.txt', '', colnames(finalDE_counts))
+
+#order count matrix columns to match the coldata row order, check to make sure coldata rows are ordered the same way as the counts columns
+finalDE_counts <- finalDE_counts[, rownames(lu_coldata)]
+all(colnames(finalDE_counts) == rownames(lu_coldata))
+
+#function to pull adjusted p-values from DESeq2 result objects
+getResStats <- function(res) {
+  print(paste('# of DE genes @ padj < 0.05:', sum(res$padj < 0.05, na.rm=TRUE)))
+  print(paste('# of DE genes @ padj < 0.01:', sum(res$padj < 0.01, na.rm=TRUE)))
+}
+
+#load DESeq2
+library('DESeq2')
+```
+
+```{r}
+# DESeq2 model for WP vs CWP - 6h ------------------------------------------------
+#this is subsetting the data from the 6h treatment of Parasite cue (WP) vs. Cue control (CWP)
+WP6_coldata <- lu_coldata
+WP6_coldata <- WP6_coldata[c(13,14,15,25,26,27), ]
+WP6_counts <- finalDE_counts
+WP6_counts <- WP6_counts[, c(13,14,15,25,26,27)]
+all(rownames(WP6_coldata) == colnames(WP6_counts))
+
+#drop factor levels which won't be used
+WP6_coldata$Experiment <- droplevels(WP6_coldata$Experiment, 'WP_96h', "A_6h", "A_96h", 'CP_6h', 'CP_96h',
+                                      "CWP_96h", "P_6h", "P_96h")
+
+#set the control as the base level, which the treatment will be compared to in terms of log-fold gene expression changes
+WP6_coldata$Experiment <- relevel(WP6_coldata$Experiment, ref = 'CWP_6h')
+levels(WP6_coldata$Experiment)
+
+#import data into DESeq2 object
+WP6_dds <- DESeqDataSetFromMatrix(countData = WP6_counts, colData = WP6_coldata,
+                                   design = ~ Experiment)
+
+#run DESeq2 function
+WP6_dds <- DESeq(WP6_dds)
+
+#rlog transform the data - for PCA, correlation matrix data exploration
+WP6_rld <- rlog(WP6_dds)
+resultsNames(WP6_dds)
+
+#plot PCA between samples - see how the samples cluster, explore the shape of the data
+plotPCA(WP6_rld, intgroup = 'Experiment')
+
+#create a correlation matrix - see how similar the samples are
+WP6_rld_mat <- assay(WP6_rld)
+WP6_rld_cor <- cor(WP6_rld_mat)
+pheatmap(WP6_rld_cor)
+
+#pull results into results object
+WP6_res <- results(WP6_dds, alpha = 0.05)
+getResStats(WP6_res)
+sum(WP6_res$padj < 0.05, na.rm=TRUE)
+
+#create a subset of the results which is all the genes which were up or downregulated with an associated adjusted p-value < 0.05
+#will be used in downstream analysis
+WP6_sigGenes <- as.data.frame(head(WP6_res[order(WP6_res$padj), ], 249))
+plot(WP6_sigGenes$log2FoldChange)
+plot(WP6_sigGenes$padj)
+```
+
+```{r}
+# DESeq2 model for P vs CP - 6h --------------------------------------------------
+#this is subsetting the data from the 6h treatment of Parasite infected (P) vs. Parasite control (CP)
+P6_coldata <- lu_coldata
+P6_coldata <- P6_coldata[c(7,8,9,19,20,21), ]
+P6_counts <- finalDE_counts
+P6_counts <- P6_counts[, c(7,8,9,19,20,21)]
+all(rownames(P6_coldata) == colnames(P6_counts))
+
+#drop factor levels which won't be used
+P6_coldata$Experiment <- droplevels(P6_coldata$Experiment, 'WP_6h', "A_6h", "A_96h", 'CP_96h', 'WP_96h',
+                                     "CWP_6h", "P_96h", "CWP_96h")
+
+#set the control as the base level, which the treatment will be compared to in terms of log-fold gene expression changes
+P96_coldata$Experiment <- relevel(P6_coldata$Experiment, ref = 'CP_6h')
+levels(P6_coldata$Experiment)
+
+#import the data into a DESeq2 object
+P6_dds <- DESeqDataSetFromMatrix(countData = P6_counts, colData = P6_coldata,
+                                  design = ~ Experiment)
+
+#run the DESeq2 function
+P6_dds <- DESeq(P6_dds)
+
+#rlog transform the data - for PCA, correlation matrix data exploration
+P6_rld <- rlog(P6_dds)
+resultsNames(P6_dds)
+
+#plot PCA between samples - see how the samples cluster, explore the shape of the data
+plotPCA(P6_rld, intgroup = 'Experiment')
+
+#create a correlation matrix - see how similar the samples are
+P6_rld_mat <- assay(P6_rld)
+P6_rld_cor <- cor(P6_rld_mat)
+pheatmap(P6_rld_cor)
+
+#pull results into results object
+P6_res <- results(P6_dds, alpha = 0.05)
+getResStats(P6_res)
+sum(P6_res$padj < 0.05, na.rm=TRUE)
+
+#create a subset of the results which is all the genes which were up or downregulated with an associated adjusted p-value < 0.05
+#will be used in downstream analysis
+P6_sigGenes <- as.data.frame(head(P6_res[order(P6_res$padj), ], 12))
+plot(P6_sigGenes$log2FoldChange)
+plot(P6_sigGenes$padj)
+```
+
+```{r}
+# DESeq2 model for A vs CWP - 6h -------------------------------------------------
+#this is subsetting the data from the 6h treatment of Host lysted cell (A) vs. Cue control (CWP)
+A6_coldata <- lu_coldata
+A6_coldata <- A6_coldata[c(1,2,3,13,14,15), ]
+A6_counts <- finalDE_counts
+A6_counts <- A6_counts[, c(1,2,3,13,14,15)]
+all(rownames(A6_coldata) == colnames(A6_counts))
+
+#drop factor levels which won't be used
+A6_coldata$Experiment <- droplevels(A6_coldata$Experiment, "A_96h", "P_6h", "P_96h", 'CP_6h', 'WP_96h','WP_6h',
+                                     "CWP_96h", "CP_96h")
+#set the control as the base level, which the treatment will be compared to in terms of log-fold gene expression changes
+A6_coldata$Experiment <- relevel(A6_coldata$Experiment, ref = 'CWP_6h')
+levels(A6_coldata$Experiment)
+
+#import data into DESeq2 object
+A6_dds <- DESeqDataSetFromMatrix(countData = A6_counts, colData = A6_coldata,
+                                  design = ~ Experiment)
+
+#run the DESeq2 function
+A6_dds <- DESeq(A6_dds)
+
+#rlog transform the data - for PCA, correlation matrix data exploration
+A6_rld <- rlog(A6_dds)
+resultsNames(A6_dds)
+
+#plot PCA between samples - see how the samples cluster, explore the shape of the data
+plotPCA(A6_rld, intgroup = 'Experiment')
+
+#create a correlation matrix - see how similar the samples are
+A6_rld_mat <- assay(A6_rld)
+A6_rld_cor <- cor(A6_rld_mat)
+pheatmap(A6_rld_cor)
+
+#pull results into results object
+A6_res <- results(A6_dds, alpha = 0.05)
+getResStats(A6_res)
+sum(A6_res$padj < 0.05, na.rm=TRUE)
+
+#create a subset of the results which is all the genes which were up or downregulated with an associated adjusted p-value < 0.05
+#will be used in downstream analysis
+A6_sigGenes <- as.data.frame(head(A6_res[order(A6_res$padj), ], 129))
+plot(A6_sigGenes$log2FoldChange)
+plot(A6_sigGenes$padj)
+
+```
+
+```{r}
+# DESeq2 model for WP vs CWP - 96h -----------------------------------------------
+#this is subsetting the data from the 96h treatment of Parasite cue (WP) vs. Cue control (CWP)
+WP96_coldata <- lu_coldata
+WP96_coldata <- WP96_coldata[c(16,17,18,28,29,30), ]
+WP96_counts <- finalDE_counts
+WP96_counts <- WP96_counts[, c(16,17,18,28,29,30)]
+all(rownames(WP96_coldata) == colnames(WP96_counts))
+
+#drop factor levels which won't be used
+WP96_coldata$Experiment <- droplevels(WP96_coldata$Experiment, 'WP_6h', "A_6h", "A_96h", 'CP_6h', 'CP_96h',
+                                      "CWP_6h", "P_6h", "P_96h")
+
+#set the control as the base level, which the treatment will be compared to in terms of log-fold gene expression changes
+WP96_coldata$Experiment <- relevel(WP96_coldata$Experiment, ref = 'CWP_96h')
+levels(WP96_coldata$Experiment)
+
+#import data into DESeq2 object
+WP96_dds <- DESeqDataSetFromMatrix(countData = WP96_counts, colData = WP96_coldata,
+                                   design = ~ Experiment)
+
+#run DESeq2 function
+WP96_dds <- DESeq(WP96_dds)
+
+#rlog transform the data - for PCA, correlation matrix data exploration
+WP96_rld <- rlog(WP96_dds)
+resultsNames(WP96_dds)
+
+#plot PCA between samples - see how the samples cluster, explore the shape of the data
+plotPCA(WP96_rld, intgroup = 'Experiment')
+
+#create a correlation matrix - see how similar the samples are
+WP96_rld_mat <- assay(WP96_rld)
+WP96_rld_cor <- cor(WP96_rld_mat)
+pheatmap(WP96_rld_cor)
+
+#pull results into results object
+WP96_res <- results(WP96_dds, alpha = 0.05)
+getResStats(WP96_res)
+sum(WP96_res$padj < 0.05, na.rm=TRUE)
+
+#create a subset of the results which is all the genes which were up or downregulated with an associated adjusted p-value < 0.05
+#will be used in downstream analysis
+WP96_sigGenes <- as.data.frame(head(WP96_res[order(WP96_res$padj), ], 11952))
+plot(WP96_sigGenes$log2FoldChange)
+plot(WP96_sigGenes$padj)
+
+
+```
+
+```{r}
+# DESeq2 model for P vs CP - 96h -------------------------------------------------------
+#this is subsetting the data from the 96h treatment of Parasite infected (P) vs. Parasite control (CP)
+P96_coldata <- lu_coldata
+P96_coldata <- P96_coldata[c(10,11,12,22,23,24), ]
+P96_counts <- finalDE_counts
+P96_counts <- P96_counts[, c(10,11,12,22,23,24)]
+all(rownames(P96_coldata) == colnames(P96_counts))
+
+#drop factor levels which won't be used
+P96_coldata$Experiment <- droplevels(P96_coldata$Experiment, 'WP_6h', "A_6h", "A_96h", 'CP_6h', 'WP_96h',
+                                      "CWP_6h", "P_6h", "CWP_96h")
+
+#set the control as the base level, which the treatment will be compared to in terms of log-fold gene expression changes
+P96_coldata$Experiment <- relevel(P96_coldata$Experiment, ref = 'CP_96h')
+levels(P96_coldata$Experiment)
+
+#import data into DESeq2 object
+P96_dds <- DESeqDataSetFromMatrix(countData = P96_counts, colData = P96_coldata,
+                                   design = ~ Experiment)
+
+#run DESeq2 function
+P96_dds <- DESeq(P96_dds)
+
+#rlog transform the data - for PCA, correlation matrix data exploration
+P96_rld <- rlog(P96_dds)
+resultsNames(P96_dds)
+
+#plot PCA between samples - see how the samples cluster, explore the shape of the data
+plotPCA(P96_rld, intgroup = 'Experiment')
+
+#create a correlation matrix - see how similar the samples are
+P96_rld_mat <- assay(P96_rld)
+P96_rld_cor <- cor(P96_rld_mat)
+pheatmap(P96_rld_cor)
+
+#pull results into results object
+P96_res <- results(P96_dds, alpha = 0.05)
+getResStats(P96_res)
+sum(P96_res$padj < 0.05, na.rm=TRUE)
+
+#create a subset of the results which is all the genes which were up or downregulated with an associated adjusted p-value < 0.05
+#will be used in downstream analysis
+P96_sigGenes <- as.data.frame(head(P96_res[order(P96_res$padj), ], 10018))
+plot(P96_sigGenes$log2FoldChange)
+plot(P96_sigGenes$padj)
+
+```
+
+```{r}
+# DESeq2 model for A vs CWP - 96h ------------------------------------------------
+#this is subsetting the data from the 96h treatment of Host lysted cell (A) vs. Cue control (CWP)
+A96_coldata <- lu_coldata
+A96_coldata <- A96_coldata[c(4,5,6,16,17,18), ]
+A96_counts <- finalDE_counts
+A96_counts <- A96_counts[, c(4,5,6,16,17,18)]
+all(rownames(A96_coldata) == colnames(A96_counts))
+
+#drop factor levels which won't be used
+A96_coldata$Experiment <- droplevels(A96_coldata$Experiment, 'WP_6h', "A_6h", "P_96h", 'CP_6h', 'WP_96h',
+                                     "CWP_6h", "P_6h", "CP_96h")
+
+#set the control as the base level, which the treatment will be compared to in terms of log-fold gene expression changes
+A96_coldata$Experiment <- relevel(A96_coldata$Experiment, ref = 'CWP_96h')
+levels(A96_coldata$Experiment)
+
+#import data into DESeq2 object
+A96_dds <- DESeqDataSetFromMatrix(countData = A96_counts, colData = A96_coldata,
+                                  design = ~ Experiment)
+
+#run DESeq2 function
+A96_dds <- DESeq(A96_dds)
+
+#rlog transform the data - for PCA, correlation matrix data exploration
+A96_rld <- rlog(A96_dds)
+resultsNames(A96_dds)
+
+#plot PCA between samples - see how the samples cluster, explore the shape of the data
+plotPCA(A96_rld, intgroup = 'Experiment')
+
+#create a correlation matrix - see how similar the samples are
+A96_rld_mat <- assay(A96_rld)
+A96_rld_cor <- cor(A96_rld_mat)
+pheatmap(A96_rld_cor)
+
+#pull results into results object
+A96_res <- results(A96_dds, alpha = 0.05)
+getResStats(A96_res)
+sum(A96_res$padj < 0.05, na.rm=TRUE)
+
+#create a subset of the results which is all the genes which were up or downregulated with an associated adjusted p-value < 0.05
+#will be used in downstream analysis
+A96_sigGenes <- as.data.frame(head(A96_res[order(A96_res$padj), ], 8))
+plot(A96_sigGenes$log2FoldChange)
+plot(A96_sigGenes$padj)
+
+
+
+```
+
+```{r}
+# Pulling out up/down regulated gene counts for recreation of Figure 2 --------
+
+#these commands are to pull out the significantly up- and down-regulated genes for each
+ # section that was displayed in the Lu et al. paper's Figure 2, which is a Venn diagram
+ # these values were written down in a txt file, which is available in the data/ subfolder in our HPC repo
+
+#up/down for A-CWP 6h
+sum(A6_sigGenes$log2FoldChange > 0)
+sum(A6_sigGenes$log2FoldChange < 0)
+length(A6_sigGenes$log2FoldChange)
+#up/down for P-CP 6h
+sum(P6_sigGenes$log2FoldChange > 0)
+sum(P6_sigGenes$log2FoldChange < 0)
+length(P6_sigGenes$log2FoldChange)
+#up/down for WP-CWP 6h
+sum(WP6_sigGenes$log2FoldChange > 0)
+sum(WP6_sigGenes$log2FoldChange < 0)
+length(WP6_sigGenes$log2FoldChange)
+#up/down for A-CWP 96h
+sum(A96_sigGenes$log2FoldChange > 0)
+sum(A96_sigGenes$log2FoldChange < 0)
+length(A96_sigGenes$log2FoldChange)
+#up/down for P-CP 96h
+sum(P96_sigGenes$log2FoldChange > 0)
+sum(P96_sigGenes$log2FoldChange < 0)
+length(P96_sigGenes$log2FoldChange)
+#up/down for WP-CWP 96h
+sum(WP96_sigGenes$log2FoldChange > 0)
+sum(WP96_sigGenes$log2FoldChange < 0)
+length(WP96_sigGenes$log2FoldChange)
+
+
+#two- and three-way venn diagram intersections (the inner, overlapping sections)
+
+#up/down between P-CP & WP-CWP - 6h
+in6_1 <- as.data.frame(rownames(WP6_sigGenes)[rownames(WP6_sigGenes) %in% rownames(P6_sigGenes)])
+names(in6_1) <- 'index'
+ven6_1 <- as.data.frame(P6_sigGenes$log2FoldChange[in6_1$index == rownames(P6_sigGenes)])
+names(ven6_1) <- 'P6'
+ven6_1$WP6 <- WP6_sigGenes$log2FoldChange[in6_1$index == rownames(WP6_sigGenes)]
+sum(t(ven6_1) > 0) 
+# there is one shared gene, it is upregulated in both
+
+
+#up/down between P-CP & A-CWP - 6h
+in6_2 <- as.data.frame(rownames(P6_sigGenes)[rownames(P6_sigGenes) %in% rownames(A6_sigGenes)])
+names(in6_2) <- 'index' 
+# no shared genes
+
+
+#up/down between A-CWP & WP-CWP - 6h
+in6_3 <- as.data.frame(rownames(A6_sigGenes)[rownames(A6_sigGenes) %in% 
+                                                rownames(WP6_sigGenes)])
+names(in6_3) <- 'index'
+ven6_3 <- as.data.frame(A6_sigGenes[in6_3$index, 2])
+names(ven6_3) <- 'A6'
+ven6_3$WP6 <- WP6_sigGenes[in6_3$index, 2]
+t_ven6_3 <- as.data.frame(t(ven6_3))
+
+sum(sapply(1:length(t_ven6_3), function(ven) {all(t_ven6_3[[ven]] > 0)}))
+sum(sapply(1:length(t_ven6_3), function(ven) {all(t_ven6_3[[ven]] < 0)}))
+#there are 4 genes which are upregulated in both, 0 that are both downregulated
+
+
+#up/down between all 3 - 6h
+in6_all <- as.data.frame(rownames(A6_sigGenes)[rownames(A6_sigGenes) %in% 
+                                               rownames(WP6_sigGenes) && rownames(P6_sigGenes)])
+#put the dataframes into a list
+sigGenes_6_list <- list(A6_sigGenes, WP6_sigGenes, P6_sigGenes)
+in6_all <- Reduce(base::intersect, sapply(sigGenes_6_list, rownames)) #find common rownames
+# no common up/down regulated genes between all 3 treatments
+
+
+
+#up/down between P-CP & WP-CWP - 96h
+in96_1 <- as.data.frame(rownames(P96_sigGenes)[rownames(P96_sigGenes) %in% 
+                                               rownames(WP96_sigGenes)])
+names(in96_1) <- 'index'
+ven96_1 <- as.data.frame(P96_sigGenes[in96_1$index, 2])
+names(ven96_1) <- 'P96'
+ven96_1$WP96 <- WP96_sigGenes[in96_1$index, 2]
+t_ven96_1 <- as.data.frame(t(ven96_1))
+
+sum(sapply(1:length(t_ven96_1), function(ven) {all(t_ven96_1[[ven]] > 0)}))
+sum(sapply(1:length(t_ven96_1), function(ven) {all(t_ven96_1[[ven]] < 0)}))
+# 1737 genes upregulated in both, 0 downregulated in both
+
+
+#up/down between P-CP & A-CWP - 96h
+in96_2 <- as.data.frame(rownames(P96_sigGenes)[rownames(P96_sigGenes) %in% 
+                                                 rownames(A96_sigGenes)])
+names(in96_2) <- 'index'
+ven96_2 <- as.data.frame(P96_sigGenes[in96_2$index, 2])
+names(ven96_2) <- 'P96'
+ven96_2$A96 <- A96_sigGenes[in96_2$index, 2]
+t_ven96_2 <- as.data.frame(t(ven96_2))
+
+sum(sapply(1:length(t_ven96_2), function(ven) {all(t_ven96_2[[ven]] > 0)}))
+sum(sapply(1:length(t_ven96_2), function(ven) {all(t_ven96_2[[ven]] < 0)}))
+# 6 genes upregulated in both, 0 downregulated in both
+
+
+#up/down between A-CWP & WP-CWP - 96h
+in96_3 <- as.data.frame(rownames(A96_sigGenes)[rownames(A96_sigGenes) %in% 
+                                                 rownames(WP96_sigGenes)])
+names(in96_3) <- 'index'
+ven96_3 <- as.data.frame(A96_sigGenes[in96_3$index, 2])
+names(ven96_3) <- 'A96'
+ven96_3$WP96 <- WP96_sigGenes[in96_3$index, 2]
+t_ven96_3 <- as.data.frame(t(ven96_3))
+
+sum(sapply(1:length(t_ven96_3), function(ven) {all(t_ven96_3[[ven]] > 0)}))
+sum(sapply(1:length(t_ven96_3), function(ven) {all(t_ven96_3[[ven]] < 0)}))
+# 6 genes upregulated in both, 0 downregulated in both
+
+
+#up/down between all 3 - 96h
+
+#put the 96h dataframes into a list
+sigGenes_96_list <- list(A96_sigGenes, WP96_sigGenes, P96_sigGenes)
+in96_all <- as.data.frame(Reduce(base::intersect, sapply(sigGenes_96_list, rownames))) #find common rownames
+names(in96_all) <- 'index'
+
+ven96_all <- as.data.frame(A96_sigGenes[in96_all$index, 2])
+names(ven96_all) <- 'A96'
+ven96_all$WP96 <- WP96_sigGenes[in96_all$index, 2]
+ven96_all$P96 <- P96_sigGenes[in96_all$index, 2]
+t_ven96_all <- as.data.frame(t(ven96_all))
+
+sum(sapply(1:length(t_ven96_all), function(ven) {all(t_ven96_all[[ven]] > 0)}))
+sum(sapply(1:length(t_ven96_all), function(ven) {all(t_ven96_all[[ven]] < 0)}))
+# 5 genes are upregulated in all 3 treatments, 0 downregulated in all 3
+
+
+```
+
+```{r}
+# formatting of GO terms from trinotate report - for Figure 3 -------------------------------------
+
+#import trinotate annotations
+trino <- read.csv('~/Documents/envBinf_finalProject/trinotate_annotation_report.xls',
+                  sep = '\t')
+
+#replacing dots with NA in all columns being used for analysis
+trino$gene_ontology_Pfam <- sub('^[.]$', NA, trino$gene_ontology_Pfam)
+trino$gene_ontology_BLASTX <- sub('^[.]$', NA, trino$gene_ontology_BLASTX)
+trino$gene_ontology_BLASTP <- sub('^[.]$', NA, trino$gene_ontology_BLASTP)
+
+# see how many missing pfam annotations there are
+sum(is.na(trino$gene_ontology_Pfam))
+
+#convert pfam go term column back to factor
+trino$gene_ontology_Pfam <- as.factor(trino$gene_ontology_Pfam)
+
+#add column to all sigGene objects (subsets of significantly up/down-regulated
+ #genes) specifying whether genes are up- or down-regulated - sigGene objects were created at the end of each DESeq2 analysis
+A6_sigGenes$reg_type <- ifelse(A6_sigGenes$log2FoldChange > 0, 'up', 'down')
+P6_sigGenes$reg_type <- ifelse(P6_sigGenes$log2FoldChange > 0, 'up', 'down')
+WP6_sigGenes$reg_type <- ifelse(WP6_sigGenes$log2FoldChange > 0, 'up', 'down')
+A96_sigGenes$reg_type <- ifelse(A96_sigGenes$log2FoldChange > 0, 'up', 'down')
+P96_sigGenes$reg_type <- ifelse(P96_sigGenes$log2FoldChange > 0, 'up', 'down')
+WP96_sigGenes$reg_type <- ifelse(WP96_sigGenes$log2FoldChange > 0, 'up', 'down')
+
+# remove duplicate rows - there were a small number of duplicate rows in the trinotate output
+ # which would have complicated downstream analysis
+trino <- distinct(trino, transcript_id, .keep_all = TRUE)
+
+#add column specifiying GO term for each transcript for each sigGene object
+A6_sigGenes$go_term <- trino$gene_ontology_Pfam[trino$transcript_id %in% rownames(A6_sigGenes)]
+P6_sigGenes$go_term <- trino$gene_ontology_Pfam[trino$transcript_id %in% rownames(P6_sigGenes)]
+WP6_sigGenes$go_term <- trino$gene_ontology_Pfam[trino$transcript_id %in% rownames(WP6_sigGenes)]
+A96_sigGenes$go_term <- trino$gene_ontology_Pfam[trino$transcript_id %in% rownames(A96_sigGenes)]
+P96_sigGenes$go_term <- trino$gene_ontology_Pfam[trino$transcript_id %in% rownames(P96_sigGenes)]
+WP96_sigGenes$go_term <- trino$gene_ontology_Pfam[trino$transcript_id %in% rownames(WP96_sigGenes)]
+
+
+#' A quick note on the GO terms that were in the trinotate report. The Pfam annotations were used - this was primarily due to 
+#' their simplicity relative to the KEGG, Blast and eggNog annotations. Still, many Pfam annotations reported multiple GO terms for a single
+#' transcript, sometimes as many as 9. Many if not all of these multiple annotations for single transcripts were similar or redundant, so 
+#' the first GO term for each transcript was used in our analysis. For some transcripts, there was only one GO term and thus this splitting 
+#' and picking the first of several terms was not necessary. The authers of the Lu et al. paper used KOGs (Eukaryotic clusters of Orthologous Groups), 
+#' and stated that they got their annotations through a online web server. However, this server was down and not available when we tried to use it,
+#' so without any other information, we used the Pfam annotations which were similar. Though annotations for eukaryotes can still be complicated regardless
+#' of database choice.
+
+
+```
+
+```{r}
+# Treatment 1: A vs CWP - 6h ----------------------------------------------
+
+#separate the go terms into different columns, using column 1 for figure creation
+
+#copy the sigGenes object in case something goes wrong
+copy_A6_sigGenes <- A6_sigGenes
+
+#calculate how many separations are required for the separate command
+max(str_count(copy_A6_sigGenes$go_term, '\\`'), na.rm = TRUE)
+
+#separate the GO terms
+copy_A6_sigGenes <- copy_A6_sigGenes %>% 
+  separate(go_term, into = c('go1', 'go2', 'go3', 'go4', 'go5', 'go6', 'go7'),
+           sep = '`')
+
+#re-format the GO term for figure creation
+copy_A6_sigGenes$go1 <- sub('GO:[0-9]*\\^', '', copy_A6_sigGenes$go1)
+
+#separate the broad GO term annotation from the specific annotation for the figure
+copy_A6_sigGenes <- copy_A6_sigGenes %>% 
+  separate(go1, into = c('broad_go', 'specif_go'),
+           sep = '\\^')
+
+#remove all all rows with no Pfam hits
+copy_A6_sigGenes <- copy_A6_sigGenes[!is.na(copy_A6_sigGenes$broad_go),]
+
+# create a mirrored barplot showing up and down regulations of the various GO terms
+
+#subset up and down-regulated genes from each treatment
+up_A6 <- copy_A6_sigGenes[copy_A6_sigGenes$log2FoldChange > 0, ]
+down_A6 <- copy_A6_sigGenes[copy_A6_sigGenes$log2FoldChange < 0, ]
+
+biol_uA6 <- up_A6[up_A6$broad_go == 'biological_process', ]
+mole_uA6 <- up_A6[up_A6$broad_go == 'molecular_function', ]
+cell_uA6 <- up_A6[up_A6$broad_go == 'cellular_component', ]
+
+biol_dA6 <- down_A6[down_A6$broad_go == 'biological_process', ]
+mole_dA6 <- down_A6[down_A6$broad_go == 'molecular_function', ]
+cell_dA6 <- down_A6[down_A6$broad_go == 'cellular_component', ]
+
+#function to make the Go term barplots
+mirrorbar <- function(up, down, title, fill, size = NULL) {ggplot() + 
+    geom_bar(data = up, aes(x = as.factor(up$specif_go), y = ..count..), fill = fill) +
+    geom_bar(data = down, aes(x = as.factor(down$specif_go), y = -..count..), fill = fill) +
+    coord_flip() + labs(x = "Gene Ontology", y = 'Number of Responsive Genes', title = title) +
+    theme(axis.text.y = element_text(hjust = 1, size = size))}
+
+#make mirror barplots for specific GO terms subsetted by broad GO terms
+mirrorbar(biol_uA6, biol_dA6, 'Host lysed cell vs. Cue Control - 6h
+          Biological Processes', 'palegreen3')
+mirrorbar(mole_uA6, mole_dA6, 'Host lysed cell vs. Cue Control - 6h
+          Molecular Functions', 'palegreen3')
+mirrorbar(cell_uA6, cell_dA6, 'Host lysed cell vs. Cue Control - 6h
+          Cellular Component', 'palegreen3')
+
+
+```
+
+```{r}
+# Treatment 2: P vs CP - 6h -----------------------------------------------
+
+#separate the go terms into different columns, using column 1 for figure creation
+
+#copy the sigGenes object in case something goes wrong
+copy_P6_sigGenes <- P6_sigGenes
+
+#calculate how many separations are required for the separate command
+max(str_count(copy_P6_sigGenes$go_term, '\\`'), na.rm = TRUE)
+
+#separate the GO terms
+copy_P6_sigGenes <- copy_P6_sigGenes %>% 
+  separate(go_term, into = c('go1', 'go2'),
+           sep = '`')
+
+#re-format the GO term for figure creation
+copy_P6_sigGenes$go1 <- sub('GO:[0-9]*\\^', '', copy_P6_sigGenes$go1)
+
+#separate the broad GO term annotation from the specific annotation for the figure
+copy_P6_sigGenes <- copy_P6_sigGenes %>% 
+  separate(go1, into = c('broad_go', 'specif_go'),
+           sep = '\\^')
+
+#remove all all rows with no Pfam hits
+copy_P6_sigGenes <- copy_P6_sigGenes[!is.na(copy_P6_sigGenes$broad_go),]
+
+# create a mirrored barplot showing up and down regulations of the various GO terms
+
+#subset up and down-regulated genes from each treatment
+up_P6 <- copy_P6_sigGenes[copy_P6_sigGenes$log2FoldChange > 0, ]
+down_P6 <- copy_P6_sigGenes[copy_P6_sigGenes$log2FoldChange < 0, ]
+
+biol_uP6 <- up_P6[up_P6$broad_go == 'biological_process', ]
+mole_uP6 <- up_P6[up_P6$broad_go == 'molecular_function', ]
+cell_uP6 <- up_P6[up_P6$broad_go == 'cellular_component', ]
+
+biol_dP6 <- down_P6[down_P6$broad_go == 'biological_process', ]
+mole_dP6 <- down_P6[down_P6$broad_go == 'molecular_function', ]
+cell_dP6 <- down_P6[down_P6$broad_go == 'cellular_component', ]
+
+
+#make mirror barplots for specific GO terms subsetted by broad GO terms
+mirrorbar(biol_uP6, biol_dP6, 'Parasite Infected vs. Parasite Control - 6h
+          Biological Processes', 'firebrick1')
+mirrorbar(mole_uP6, mole_dP6, 'Parasite Infected vs. Parasite Control - 6h
+          Molecular Functions', 'firebrick1')
+mirrorbar(cell_uP6, cell_dP6, 'Parasite Infected vs. Parasite Control - 6h
+          Cellular Component', 'firebrick1')
+
+
+```
+
+```{r}
+# Treatment 3: WP vs CWP - 6h ---------------------------------------------
+
+#separate the go terms into different columns, using column 1 for figure creation
+
+#copy the sigGenes object in case something goes wrong
+copy_WP6_sigGenes <- WP6_sigGenes
+
+#calculate how many separations are required for the separate command
+max(str_count(copy_WP6_sigGenes$go_term, '\\`'), na.rm = TRUE)
+
+#separate the GO terms
+copy_WP6_sigGenes <- copy_WP6_sigGenes %>% 
+  separate(go_term, into = c('go1', 'go2', 'go3', 'go4', 'go5', 'go6', 'go7'),
+           sep = '`')
+
+#re-format the GO term for figure creation
+copy_WP6_sigGenes$go1 <- sub('GO:[0-9]*\\^', '', copy_WP6_sigGenes$go1)
+
+#separate the broad GO term annotation from the specific annotation for the figure
+copy_WP6_sigGenes <- copy_WP6_sigGenes %>% 
+  separate(go1, into = c('broad_go', 'specif_go'),
+           sep = '\\^')
+
+#remove all all rows with no Pfam hits
+copy_WP6_sigGenes <- copy_WP6_sigGenes[!is.na(copy_WP6_sigGenes$broad_go),]
+
+# create a mirrored barplot showing up and down regulations of the various GO terms
+
+#subset up and down-regulated genes from each treatment
+up_WP6 <- copy_WP6_sigGenes[copy_WP6_sigGenes$log2FoldChange > 0, ]
+down_WP6 <- copy_WP6_sigGenes[copy_WP6_sigGenes$log2FoldChange < 0, ]
+
+biol_uWP6 <- up_WP6[up_WP6$broad_go == 'biological_process', ]
+mole_uWP6 <- up_WP6[up_WP6$broad_go == 'molecular_function', ]
+cell_uWP6 <- up_WP6[up_WP6$broad_go == 'cellular_component', ]
+
+biol_dWP6 <- down_WP6[down_WP6$broad_go == 'biological_process', ]
+mole_dWP6 <- down_WP6[down_WP6$broad_go == 'molecular_function', ]
+cell_dWP6 <- down_WP6[down_WP6$broad_go == 'cellular_component', ]
+
+
+#make mirror barplots for specific GO terms subsetted by broad GO terms
+mirrorbar(biol_uWP6, biol_dWP6, 'Parasite Cue vs. Cue Control - 6h
+          Biological Processes', 'steelblue')
+mirrorbar(mole_uWP6, mole_dWP6, 'Parasite Cue vs. Cue Control - 6h
+          Molecular Functions', 'steelblue')
+mirrorbar(cell_uWP6, cell_dWP6, 'Parasite Cue vs. Cue Control - 6h
+          Cellular Component', 'steelblue')
+
+```
+
+```{r}
+# Treatment 4: A vs CWP - 96h ---------------------------------------------
+
+#separate the go terms into different columns, using column 1 for figure creation
+
+#copy the sigGenes object in case something goes wrong
+copy_A96_sigGenes <- A96_sigGenes
+
+#calculate how many separations are required for the separate command
+max(str_count(copy_A96_sigGenes$go_term, '\\`'), na.rm = TRUE)
+
+#separate the GO terms
+copy_A96_sigGenes <- copy_A96_sigGenes %>% 
+  separate(go_term, into = c('go1', 'go2', 'go3'),
+           sep = '`')
+
+#re-format the GO term for figure creation
+copy_A96_sigGenes$go1 <- sub('GO:[0-9]*\\^', '', copy_A96_sigGenes$go1)
+
+#separate the broad GO term annotation from the specific annotation for the figure
+copy_A96_sigGenes <- copy_A96_sigGenes %>% 
+  separate(go1, into = c('broad_go', 'specif_go'),
+           sep = '\\^')
+
+#remove all all rows with no Pfam hits
+copy_A96_sigGenes <- copy_A96_sigGenes[!is.na(copy_A96_sigGenes$broad_go),]
+
+# create a mirrored barplot showing up and down regulations of the various GO terms
+
+#subset up and down-regulated genes from each treatment
+up_A96 <- copy_A96_sigGenes[copy_A96_sigGenes$log2FoldChange > 0, ]
+down_A96 <- copy_A96_sigGenes[copy_A96_sigGenes$log2FoldChange < 0, ]
+
+biol_uA96 <- up_A96[up_A96$broad_go == 'biological_process', ]
+mole_uA96 <- up_A96[up_A96$broad_go == 'molecular_function', ]
+cell_uA96 <- up_A96[up_A96$broad_go == 'cellular_component', ]
+
+biol_dA96 <- down_A96[down_A96$broad_go == 'biological_process', ]
+mole_dA96 <- down_A96[down_A96$broad_go == 'molecular_function', ]
+cell_dA96 <- down_A96[down_A96$broad_go == 'cellular_component', ]
+
+
+#make mirror barplots for specific GO terms subsetted by broad GO terms
+mirrorbar(biol_uA96, biol_dA96, 'Host lysed cell vs. Cue Control - 96h
+          Biological Processes', 'palegreen3')
+mirrorbar(mole_uA96, mole_dA96, 'Host lysed cell vs. Cue Control - 96h
+          Molecular Functions', 'palegreen3')
+mirrorbar(cell_uA96, cell_dA96, 'Host lysed cell vs. Cue Control - 96h
+          Cellular Component', 'palegreen3')
+
+
+```
+
+```{r}
+# Treatment 5: P vs CP - 96h ----------------------------------------------
+
+#separate the go terms into different columns, using column 1 for figure creation
+
+#copy the sigGenes object in case something goes wrong
+copy_P96_sigGenes <- P96_sigGenes
+
+#calculate how many separations are required for the separate command
+max(str_count(copy_P96_sigGenes$go_term, '\\`'), na.rm = TRUE)
+
+#separate the GO terms
+copy_P96_sigGenes <- copy_P96_sigGenes %>% 
+  separate(go_term, into = c('go1', 'go2', 'go3', 'go4', 'go5', 'go6', 'go7', 'go8', 'go9', 'go10'),
+           sep = '`')
+
+#re-format the GO term for figure creation
+copy_P96_sigGenes$go1 <- sub('GO:[0-9]*\\^', '', copy_P96_sigGenes$go1)
+
+#separate the broad GO term annotation from the specific annotation for the figure
+copy_P96_sigGenes <- copy_P96_sigGenes %>% 
+  separate(go1, into = c('broad_go', 'specif_go'),
+           sep = '\\^')
+
+#remove all all rows with no Pfam hits
+copy_P96_sigGenes <- copy_P96_sigGenes[!is.na(copy_P96_sigGenes$broad_go),]
+
+# create a mirrored barplot showing up and down regulations of the various GO terms
+
+
+#subset up and down-regulated genes from each treatment
+up_P96 <- copy_P96_sigGenes[copy_P96_sigGenes$log2FoldChange > 0, ]
+down_P96 <- copy_P96_sigGenes[copy_P96_sigGenes$log2FoldChange < 0, ]
+
+biol_uP96 <- up_P96[up_P96$broad_go == 'biological_process', ]
+mole_uP96 <- up_P96[up_P96$broad_go == 'molecular_function', ]
+cell_uP96 <- up_P96[up_P96$broad_go == 'cellular_component', ]
+
+biol_dP96 <- down_P96[down_P96$broad_go == 'biological_process', ]
+mole_dP96 <- down_P96[down_P96$broad_go == 'molecular_function', ]
+cell_dP96 <- down_P96[down_P96$broad_go == 'cellular_component', ]
+
+#make mirror barplots for specific GO terms subsetted by broad GO terms
+mirrorbar(biol_uP96, biol_dP96, 'Parasite Infected vs. Parasite Control - 96h
+          Biological Processes', 'firebrick1')
+mirrorbar(mole_uP96, mole_dP96, 'Parasite Infected vs. Parasite Control - 96h
+          Molecular Functions', 'firebrick1', 4)
+mirrorbar(cell_uP96, cell_dP96, 'Parasite Infected vs. Parasite Control - 96h
+          Cellular Component', 'firebrick1')
+
+```
+
+```{r}
+# Treatment 6: WP vs CWP - 96h --------------------------------------------
+
+#separate the go terms into different columns, using column 1 for figure creation
+
+#copy the sigGenes object in case something goes wrong
+copy_WP96_sigGenes <- WP96_sigGenes
+
+#calculate how many separations are required for the separate command
+max(str_count(copy_WP96_sigGenes$go_term, '\\`'), na.rm = TRUE)
+
+#separate the GO terms
+copy_WP96_sigGenes <- copy_WP96_sigGenes %>% 
+  separate(go_term, into = c('go1', 'go2', 'go3', 'go4', 'go5', 'go6', 'go7'),
+           sep = '`')
+
+#re-format the GO term for figure creation
+copy_WP96_sigGenes$go1 <- sub('GO:[0-9]*\\^', '', copy_WP96_sigGenes$go1)
+
+#separate the broad GO term annotation from the specific annotation for the figure
+copy_WP96_sigGenes <- copy_WP96_sigGenes %>% 
+  separate(go1, into = c('broad_go', 'specif_go'),
+           sep = '\\^')
+
+#remove all all rows with no Pfam hits
+copy_WP96_sigGenes <- copy_WP96_sigGenes[!is.na(copy_WP96_sigGenes$broad_go),]
+
+### create a mirrored barplot showing up and down regulations of the various GO terms
+
+#see which broad go categories there are in the sigGenes object
+unique(copy_WP6_sigGenes$broad_go)
+
+#subset up and down-regulated genes from each treatment and based on broad GO terms
+up_WP96 <- copy_WP96_sigGenes[copy_WP96_sigGenes$log2FoldChange > 0, ]
+down_WP96 <- copy_WP96_sigGenes[copy_WP96_sigGenes$log2FoldChange < 0, ]
+
+biol_uWP96 <- up_WP96[up_WP96$broad_go == 'biological_process', ]
+mole_uWP96 <- up_WP96[up_WP96$broad_go == 'molecular_function', ]
+cell_uWP96 <- up_WP96[up_WP96$broad_go == 'cellular_component', ]
+
+biol_dWP96 <- down_WP96[down_WP96$broad_go == 'biological_process', ]
+mole_dWP96 <- down_WP96[down_WP96$broad_go == 'molecular_function', ]
+cell_dWP96 <- down_WP96[down_WP96$broad_go == 'cellular_component', ]
+
+
+#make mirror barplots for specific GO terms subsetted by broad GO terms
+mirrorbar(biol_uWP96, biol_dWP96, 'Parasite Cue vs. Cue Control - 96h
+          Biological Processes', 'steelblue')
+mirrorbar(mole_uWP96, mole_dWP96, 'Parasite Cue vs. Cue Control - 96h
+          Molecular Functions', 'steelblue', 5)
+mirrorbar(cell_uWP96, cell_dWP96, 'Parasite Cue vs. Cue Control - 96h
+          Cellular Component', 'steelblue')
+```
+
+The Lu et al. 2016 paper was re-analyzed by incorporating elements of the original data analysis pipeline. The 33 single-end sequencing libraries used in tests of differential gene expression across treatments were publically available through SRA. However, the data used to create the reference transcriptome in the paper (12 paired-end libraries were not available as well as internal expressed sequence tag data) which these single-end samples were mapped to to generate counts data for differential expression analysis, were not available. The single-end samples which were available, as well as an additional set of paired-end RNA-seq samples of Alexandrium fundyense pure cultures from MMETSP (the only other Alexandrium fundyense Illumina data found through NCBI and other sources) were used to supplement the unavailable sequences to construct a reference transcriptome in this project.
+
+When comparing the outputs of the differential gene expression analyses, it appears the change in reference transcriptome and updates to versions of DESeq(2) did not impact overall outcome of these comparisons. The numbers of up- and downregulated genes across most treatments and timepoints fell within an order of magnitude of the original analyses. One notable difference was the variation between upregulated genes in the 96-hr waterborne cue comparison (3720 vs. 11514). Despite this, there was a similar number of shared up- and downregulated genes between treatments. It is possible this inflation of upregulated genes is an artifact of differences in the alignment of these reads to the altered reference transcriptome. Or perhaps the inclusion of the MMETSP data in the reference transcriptome illuminated genes which were not present in the original paper's transcriptome. 
+
+The differentially expressed genes from each treatment were annotated to characterize potential differences in cellular function. In the original analysis, several functional categories were significantly up- and downregulated. Upregulated groups included post-translational modification, protein turnover, chaperones, translation, ribosomal structure and biogenesis, energy production and conversion, amino acid transport and metabolism, inorganic ion transport and metabolism, and "general function prediction". Downregulated categories included post-translational modification, protein turnover, chaperones, translation, ribosomal structure and biogenesis, replication, recombination, repair, and general function prediction. Many of these categories are the same, highlighting both the paucity of information available in eukaryotic gene ontology databases and issues with manually curating gene functions. It is unclear how host-parasite interactions may alter cellular function when categories are notably both up- and downregualted in a given treatment.
+
+Our reanalyzed data noted some similarities to the original results. Upregulated and downregulated genes include ATP binding, calcium ion binding, catalytic activity, DNA binding, ion channel activity, nucleic acid binding, protein binding, protein kinase activity, RNA binding, structural constituent of ribosomes, transmembrane tranport, and membrane components. When comparing the parasite treatment to the parasite cue, most genes were similarly up and downregulated in the parasite treatment; however, the parasite cue treatment exhibited mostly upregulated genes. This is expected based on the results of the differential gene expression analyses. Additonal gene categories that were upregulated in the parasite cue treatment included cell redox homeostasis, intracellular protein transport, and GTPase activity. It is thought that parasites may have the ability to "hijack" a host's cellular machinery to facilitate their lifecycle. Based on our results and the results from the original analysis, it is possible that the upregulation of genes associated with replication, translation, and transportation are the result of parasitic influence.

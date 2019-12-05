@@ -1,0 +1,11 @@
+sbatch run-trimmomatic-1.sh
+sbatch run-trimmomatic-2.sh
+sbatch run-trimmomatic-3.sh
+sbatch run-trimmomatic-4.sh
+sbatch run-trimmomatic-5.sh
+sbatch run-trimmomatic-6.sh
+sbatch run-trimmomatic-7.sh
+sbatch run-trimmomatic-8.sh
+sbatch run-trimmomatic-9.sh
+sbatch run-trimmomatic-10.sh
+sbatch run-trimmomatic-11.sh

@@ -1,0 +1,36 @@
+Trinotate commands used in an interactive cluster node
+
+#build databases to use with trinotate
+Build_Trinotate_Boilerplate_SQLite_db.pl Trinotate
+
+#Prepare the protein database for blast searches by:
+makeblastdb -in uniprot_sprot.pep -dbtype prot
+
+
+#Uncompress and prepare the Pfam database for use with 'hmmscan' like so:
+gunzip Pfam-A.hmm.gz
+hmmpress Pfam-A.hmm
+
+#in an interactive node
+#Step 1: extract the long open reading frames
+TransDecoder.LongOrfs -t target_transcripts.fasta
+
+#ran shell script to cluster for the next step - predicting homology, etc. (see script)
+
+ran scripts i made for blastp (on transdecoder predicted proteins), blastx (on all transcripts), and hmmscan
+
+#load transcripts and coding regions
+Trinotate Trinotate.sqlite init --gene_trans_map Trinity.fasta.gene_trans_map \
+--transcript_fasta alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa \
+--transdecoder_pep alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa.transdecoder.pep
+
+#loading blast homologies
+Trinotate Trinotate.sqlite LOAD_swissprot_blastp blastp.outfmt6
+
+Trinotate Trinotate.sqlite LOAD_swissprot_blastx blastx.outfmt6
+
+#loading Pfam domain entries
+Trinotate Trinotate.sqlite LOAD_pfam TrinotatePFAM.out
+
+#output the trinotate annotation report
+Trinotate Trinotate.sqlite report [opts] > trinotate_annotation_report.xls

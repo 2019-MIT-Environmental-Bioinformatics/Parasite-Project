@@ -1,0 +1,6 @@
+SRR1294385_1.fastq.gz SRR1294385_2.fastq.gz
+SRR1294386_1.fastq.gz SRR1294386_2.fastq.gz
+SRR1294387_1.fastq.gz SRR1294387_2.fastq.gz
+SRR1294388_1.fastq.gz SRR1294388_2.fastq.gz
+SRR1294389_1.fastq.gz SRR1294389_2.fastq.gz
+SRR1300214_1.fastq.gz SRR1300214_2.fastq.gz

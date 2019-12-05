@@ -1,0 +1,15 @@
+TrimmomaticSE: Started with arguments:
+ -threads 36 SRR3033487.fastq.gz ../trimmed-fastq-files/SRR3033487-trimmed.fastq.gz SLIDINGWINDOW:4:20 MINLEN:37
+Quality encoding detected as phred33
+Input Reads: 35250233 Surviving: 33152272 (94.05%) Dropped: 2097961 (5.95%)
+TrimmomaticSE: Completed successfully
+TrimmomaticSE: Started with arguments:
+ -threads 36 SRR3033488.fastq.gz ../trimmed-fastq-files/SRR3033488-trimmed.fastq.gz SLIDINGWINDOW:4:20 MINLEN:37
+Quality encoding detected as phred33
+Input Reads: 38516164 Surviving: 37013774 (96.10%) Dropped: 1502390 (3.90%)
+TrimmomaticSE: Completed successfully
+TrimmomaticSE: Started with arguments:
+ -threads 36 SRR3033489.fastq.gz ../trimmed-fastq-files/SRR3033489-trimmed.fastq.gz SLIDINGWINDOW:4:20 MINLEN:37
+Quality encoding detected as phred33
+Input Reads: 34132086 Surviving: 32083647 (94.00%) Dropped: 2048439 (6.00%)
+TrimmomaticSE: Completed successfully
