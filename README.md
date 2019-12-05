@@ -45,8 +45,12 @@ Location of data files: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/
 
 Step 2: Assemble reference transcriptome
 
-Note: the first reference transcriptome (assembled purely from MMETSP reads) did not measure well against the paper’s, so we assembled a second one including both MMETSP paired-end RNA-Seq data and the Lu et al single-end RNA-seq data from the paper. The following is the protocol for the second reference transcriptome:
-Despite this, here is the location of the first reference transcriptome: aboration/Parasite-Project/Parasite-Project/output/MMETSP-only-trinity-assembly (supporting statistics here: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/bwa-aln-on-MMETSP-only-ref-transcriptome-results)
+Note: the first reference transcriptome (assembled purely from MMETSP reads) did not measure well against the paper’s, so we assembled a second one including both MMETSP paired-end RNA-Seq data and the Lu et al single-end RNA-seq data from the paper. 
+
+However, here is the location of the first reference transcriptome: aboration/Parasite-Project/Parasite-Project/output/MMETSP-only-trinity-assembly (supporting statistics here: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/bwa-aln-on-MMETSP-only-ref-transcriptome-results)
+
+
+The following is the protocol for the second reference transcriptome:
 
 Reads are first quality checked using FastQC before trimming, then trimmed using Trimmomatic. A second quality check is performed after trimming. Samples from the experimental treatments from the Lu et al paper are then decontaminated using a reference parasite genome and the tool BBmap (from BBtools). A 95% match to the parasite reference genome was selected due to the close relation to the host (both are dinoflagellates). This step eliminates reads that may have been introduced from the parasite in the Lu et al samples. Trinity is then used to assemble a reference transcriptome from MMETSP samples and the 33 samples from the Lu et al. paper. This generates ~160k transcripts, which is comparable to the original analysis’ transcriptome.
 
