@@ -6,10 +6,10 @@ Authors: Lu et al. 2016
 The ‘Amoebophrya species complex’ is part of the order Syndiniales, a diverse lineage of parasites known to infect dinoflagellates (including harmful algal bloom taxa), ciliates, radiolarians, and copepods. These parasites dominate molecular marker gene libraries from global ocean surveys; however, there is a widening gap between the characterization of the diversity of this order and the roles these microbes play in marine environments, including pressure on populations of susceptible hosts. Here, the authors used cultured isolates of the host, Alexandrium fundyense, and a strain of parasite belonging to the ‘Amoebophrya species complex’ to compare the effects of an active parasite presence and waterborne cues that may be released from infections in nearby cells on host gene expression. Three time points were collected based on the progression of an infection when parasites were present: time 0 when the hosts were exposed to parasite cues, the initial stage of infection at hour 6, and the termination of infections at hour 96. 
 
 # HPC repository: 
-/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project
+```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project```
 
 # GitHub repository: 
-https://github.com/2019-MIT-Environmental-Bioinformatics/Parasite-Project
+```https://github.com/2019-MIT-Environmental-Bioinformatics/Parasite-Project```
 
 # Summary of folders and subfolders:
 
@@ -44,12 +44,12 @@ output/
 # Step 1: Download files from SRA
 Thirty-three single end read files are available publicly from this study. To supplement these reads, a set of paired-end RNA-seq reads of Alexandrium fundyense isolate cultures from MMETSP is also downloaded. All reads are downloaded from NCBI using sra-tools.
 
-Location of data files: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/data/ncbi-sequence-data
+Location of data files: ```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/data/ncbi-sequence-data```
 
 # Step 2: Assemble reference transcriptome
 Note: the first reference transcriptome (assembled purely from MMETSP reads) did not measure well against the paper’s, so we assembled a second one including both MMETSP paired-end RNA-Seq data and the Lu et al single-end RNA-seq data from the paper. 
 
-However, here is the location of the first reference transcriptome: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/MMETSP-only-trinity-assembly (supporting statistics here: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/bwa-aln-on-MMETSP-only-ref-transcriptome-results)
+However, here is the location of the first reference transcriptome: ```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/MMETSP-only-trinity-assembly``` (supporting statistics here: ```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/bwa-aln-on-MMETSP-only-ref-transcriptome-results```)
 
 
 The following is the protocol for the second reference transcriptome:
@@ -57,35 +57,35 @@ The following is the protocol for the second reference transcriptome:
 Reads are first quality checked using FastQC before trimming, then trimmed using Trimmomatic. A second quality check is performed after trimming. Samples from the experimental treatments from the Lu et al paper are then decontaminated using a reference parasite genome and the tool BBmap (from BBtools). A 95% match to the parasite reference genome was selected due to the close relation to the host (both are dinoflagellates). This step eliminates reads that may have been introduced from the parasite in the Lu et al samples. Trinity is then used to assemble a reference transcriptome from MMETSP samples and the 33 samples from the Lu et al. paper. This generates ~160k transcripts, which is comparable to the original analysis’ transcriptome.
 
 Location of reference transcriptome, transcriptome statistics: 
-/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/bwa-aln-Lu-and-MMETSP-ref-transcriptome-results/alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa
+```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/bwa-aln-Lu-and-MMETSP-ref-transcriptome-results/alexandrium-ref-trans-combined-all-fw-reads-and-lu.fa```
 
 Location of scripts used in creating the transcriptome: 
-/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/Lu-et-al-sequence-processing-and-analysis # Lu sample processing 
+```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/Lu-et-al-sequence-processing-and-analysis``` # Lu sample processing
 
-/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/MMETSP-sequence-processing-and-analysis # MMETSP sample processing
+```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/MMETSP-sequence-processing-and-analysis``` # MMETSP sample processing
 
-/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/bwa-aln-Lu-and-MMETSP-ref-transcriptome-analysis #bbmap decontamination script(s)
+```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/bwa-aln-Lu-and-MMETSP-ref-transcriptome-analysis``` #bbmap decontamination script(s)
 
-/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/trinity-assembly/run-trinity-all-lu-reads-and-MMETSP-reads # trinity assembly scripts – Note: ran assembly on bigmem because it stalled on the compute node multiple times. Finally finished when it was run and troubleshooted on bigmem.
+```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/trinity-assembly/run-trinity-all-lu-reads-and-MMETSP-reads``` # trinity assembly scripts – Note: ran assembly on bigmem because it stalled on the compute node multiple times. Finally finished when it was run and troubleshooted on bigmem.
 
 # Step 3: Align reads to reference transcriptome
 Bwa aln is used to map the 33 samples to the reference transcriptome. This generates .sai files that are converted to .sam files using samtools. Picard tools is used to clean and sort the .sam files and samtools is used to extract the read counts. Last, a custom python script (made available through the class) is used to make a final table of the read counts. 
 
-Location of read counts, read count table: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/bwa-aln-Lu-and-MMETSP-ref-transcriptome-results/
+Location of read counts, read count table: ```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/bwa-aln-Lu-and-MMETSP-ref-transcriptome-results/```
 
 Location of scripts related to the alignment process:
-/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/bwa-aln-Lu-and-MMETSP-ref-transcriptome-analysis #bwa alignment scripts and analysis scripts. Note: sai-to-fastq index text files were created in R and used in some scripts.
+```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/bwa-aln-Lu-and-MMETSP-ref-transcriptome-analysis``` #bwa alignment scripts and analysis scripts. Note: sai-to-fastq index text files were created in R and used in some scripts.
 
 # Step 4: Differential gene expression
 Treatments vs. controls are run individually for each time point (total of 6 analyses).
 
-DE and Trinotate analyses are done in the R Notebook, located here: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/jupyter-notebooks
+DE and Trinotate analyses are done in the R Notebook, located here: ```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/jupyter-notebooks```
 
 The results from this step are comparable to the original analyses in Lu et al.
 
 # Step 5: Gene annotation
 Trinotate is used to search Pfam, Blast, EggNOG, KEGG databases for GO terms for all the transcripts from the second reference transcriptome. This data was then moved into R to match GO annotations to the significantly up- and downregulated genes found for each treatment (padj<0.05).
 
-Location of Trinotate report: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/data/DESeq2-input-data
+Location of Trinotate report: ```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/data/DESeq2-input-data```
 
-Location of scripts involved in Trinotate analysis: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/trinotate
+Location of scripts involved in Trinotate analysis: ```/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/trinotate```
