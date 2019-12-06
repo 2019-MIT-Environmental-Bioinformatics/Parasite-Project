@@ -49,7 +49,7 @@ Location of data files: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/
 # Step 2: Assemble reference transcriptome
 Note: the first reference transcriptome (assembled purely from MMETSP reads) did not measure well against the paper’s, so we assembled a second one including both MMETSP paired-end RNA-Seq data and the Lu et al single-end RNA-seq data from the paper. 
 
-However, here is the location of the first reference transcriptome: aboration/Parasite-Project/Parasite-Project/output/MMETSP-only-trinity-assembly (supporting statistics here: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/bwa-aln-on-MMETSP-only-ref-transcriptome-results)
+However, here is the location of the first reference transcriptome: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/MMETSP-only-trinity-assembly (supporting statistics here: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/bwa-aln-on-MMETSP-only-ref-transcriptome-results)
 
 
 The following is the protocol for the second reference transcriptome:
