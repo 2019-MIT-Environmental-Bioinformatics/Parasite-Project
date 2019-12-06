@@ -2,13 +2,16 @@ Paper Title: Transcriptomic profiling of Alexandrium fundyense during physical i
 
 Authors: Lu et al. 2016
 
-Project Overview: The ‘Amoebophrya species complex’ is part of the order Syndiniales, a diverse lineage of parasites known to infect dinoflagellates (including harmful algal bloom taxa), ciliates, radiolarians, and copepods. These parasites dominate molecular marker gene libraries from global ocean surveys; however, there is a widening gap between the characterization of the diversity of this order and the roles these microbes play in marine environments, including pressure on populations of susceptible hosts. Here, the authors used cultured isolates of the host, Alexandrium fundyense, and a strain of parasite belonging to the ‘Amoebophrya species complex’ to compare the effects of an active parasite presence and waterborne cues that may be released from infections in nearby cells on host gene expression. Three time points were collected based on the progression of an infection when parasites were present: time 0 when the hosts were exposed to parasite cues, the initial stage of infection at hour 6, and the termination of infections at hour 96. 
+# Project Overview: 
+The ‘Amoebophrya species complex’ is part of the order Syndiniales, a diverse lineage of parasites known to infect dinoflagellates (including harmful algal bloom taxa), ciliates, radiolarians, and copepods. These parasites dominate molecular marker gene libraries from global ocean surveys; however, there is a widening gap between the characterization of the diversity of this order and the roles these microbes play in marine environments, including pressure on populations of susceptible hosts. Here, the authors used cultured isolates of the host, Alexandrium fundyense, and a strain of parasite belonging to the ‘Amoebophrya species complex’ to compare the effects of an active parasite presence and waterborne cues that may be released from infections in nearby cells on host gene expression. Three time points were collected based on the progression of an infection when parasites were present: time 0 when the hosts were exposed to parasite cues, the initial stage of infection at hour 6, and the termination of infections at hour 96. 
 
-HPC repository: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project
+# HPC repository: 
+/vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project
 
-GitHub repository: https://github.com/2019-MIT-Environmental-Bioinformatics/Parasite-Project
+# GitHub repository: 
+https://github.com/2019-MIT-Environmental-Bioinformatics/Parasite-Project
 
-Summary of folders and subfolders:
+# Summary of folders and subfolders:
 
 All subfolders are further divided by sections of our analysis. Quality control and initial analysis of sequencing samples are divided into subfolders for samples from the Lu et al paper NCBI repository, and those taken from the MMETSP (Marine Microbial Eukaryote Transcriptome Sequencing Project) NCBI repository. There are subfolders specific to these analyses in logs/, data/, and output/.
 
@@ -19,7 +22,7 @@ A second set of analyses was done based on the construction of a reference trans
  Annotations for the second reference transcriptome (constructed from both MMETSP and Lu et al RNA-seq data) were constructed using Trinotate and there are subfolders specific to these analyses in logs/, data/, and output/.
 
 
-Folders:
+# Folders:
 
 envs/ contains .yaml files for conda environments used for the analyses
 
@@ -38,13 +41,12 @@ output/
   -DE-analysis/ compiled results of differential expression analysis
   -gene-annotation/ result of gene annotation of differentially expressed genes
 
-Step 1: Download files from SRA
+# Step 1: Download files from SRA
 Thirty-three single end read files are available publicly from this study. To supplement these reads, a set of paired-end RNA-seq reads of Alexandrium fundyense isolate cultures from MMETSP is also downloaded. All reads are downloaded from NCBI using sra-tools.
 
 Location of data files: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/data/ncbi-sequence-data
 
-Step 2: Assemble reference transcriptome
-
+# Step 2: Assemble reference transcriptome
 Note: the first reference transcriptome (assembled purely from MMETSP reads) did not measure well against the paper’s, so we assembled a second one including both MMETSP paired-end RNA-Seq data and the Lu et al single-end RNA-seq data from the paper. 
 
 However, here is the location of the first reference transcriptome: aboration/Parasite-Project/Parasite-Project/output/MMETSP-only-trinity-assembly (supporting statistics here: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/bwa-aln-on-MMETSP-only-ref-transcriptome-results)
@@ -66,7 +68,7 @@ Location of scripts used in creating the transcriptome:
 
 /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/trinity-assembly/run-trinity-all-lu-reads-and-MMETSP-reads # trinity assembly scripts – Note: ran assembly on bigmem because it stalled on the compute node multiple times. Finally finished when it was run and troubleshooted on bigmem.
 
-Step 3: Align reads to reference transcriptome
+# Step 3: Align reads to reference transcriptome
 Bwa aln is used to map the 33 samples to the reference transcriptome. This generates .sai files that are converted to .sam files using samtools. Picard tools is used to clean and sort the .sam files and samtools is used to extract the read counts. Last, a custom python script (made available through the class) is used to make a final table of the read counts. 
 
 Location of read counts, read count table: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/output/bwa-aln-Lu-and-MMETSP-ref-transcriptome-results/
@@ -74,14 +76,14 @@ Location of read counts, read count table: /vortexfs1/omics/env-bio/collaboratio
 Location of scripts related to the alignment process:
 /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/scripts/bwa-aln-Lu-and-MMETSP-ref-transcriptome-analysis #bwa alignment scripts and analysis scripts. Note: sai-to-fastq index text files were created in R and used in some scripts.
 
-Step 4: Differential gene expression
+# Step 4: Differential gene expression
 Treatments vs. controls are run individually for each time point (total of 6 analyses).
 
 DE and Trinotate analyses are done in the R Notebook, located here: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/jupyter-notebooks
 
 The results from this step are comparable to the original analyses in Lu et al.
 
-Step 5: Gene annotation
+# Step 5: Gene annotation
 Trinotate is used to search Pfam, Blast, EggNOG, KEGG databases for GO terms for all the transcripts from the second reference transcriptome. This data was then moved into R to match GO annotations to the significantly up- and downregulated genes found for each treatment (padj<0.05).
 
 Location of Trinotate report: /vortexfs1/omics/env-bio/collaboration/Parasite-Project/Parasite-Project/data/DESeq2-input-data
